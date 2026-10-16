@@ -3,18 +3,18 @@ import pandas as pd
 import joblib
 
 # Create flask app
-flask_app = Flask(__name__)
+app = Flask(__name__)
 
 # Load the joblib model and pre files
 pre = joblib.load("pipeline.joblib")
 model = joblib.load("model.joblib")
 
-@flask_app.route("/")
+@app.route("/")
 def Home():
-    return render_template("index2.html")
+    return render_template("index3.html")
 
 # Input features should be considered and we will write the code on what should happen when predict is clicked
-@flask_app.route("/predict",methods=["POST"])
+@app.route("/predict",methods=["POST"])
 def predict():
     # Numerical features need to converted to float as html brings the data in string format
     Age = float(request.form["Age"])
@@ -54,7 +54,10 @@ def predict():
         op = "Loan Status is Approved"
     else:
         op = "Loan Status is Not Approved"
-    return render_template("index2.html",prediction_text=op)
+    return render_template("index3.html",prediction_text=op)
 
-if __name__=="__main__":
-    flask_app.run(debug=True)
+# if __name__=="__main__":
+#     flask_app.run(debug=True)
+
+if __name__ == "__main__":
+      app.run(port=8000, debug=True)
